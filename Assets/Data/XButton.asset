@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c327ece23034af4b4488be442fa7ca, type: 3}
+  m_Name: XButton
+  m_EditorClassIdentifier: 
+  buttonName: J
+  audioClips:
+  - {fileID: 8300000, guid: 69f10d8abc6da4bdb8781dec1205899c, type: 3}
+  - {fileID: 8300000, guid: f3c932012a5954b4fa3a655fae55cbc0, type: 3}
+  - {fileID: 8300000, guid: f9d56933ff97c43afa7584c7d47883a3, type: 3}
+  - {fileID: 8300000, guid: 04826b40c0aa845a29282bb157e3e39b, type: 3}

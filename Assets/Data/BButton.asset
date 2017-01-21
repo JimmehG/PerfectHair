@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c327ece23034af4b4488be442fa7ca, type: 3}
+  m_Name: BButton
+  m_EditorClassIdentifier: 
+  buttonName: Z
+  audioClips:
+  - {fileID: 8300000, guid: cd2da6d1ea3e24d6b8e281258e921524, type: 3}
+  - {fileID: 8300000, guid: 003f62dd2bc864b4687b830afc239b4e, type: 3}
+  - {fileID: 8300000, guid: 2b7c871020af84c1a8df9b3b4ccab1d5, type: 3}
+  - {fileID: 8300000, guid: 5fba3c709915e4ef2917f1201d9cb816, type: 3}
