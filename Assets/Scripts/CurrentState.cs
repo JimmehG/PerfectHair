@@ -50,6 +50,8 @@ public class CurrentState : MonoBehaviour
 
 	[Header("Game State")]
 
+	int currentWinner = -1;
+
 	[ReadOnlyAttribute]
 	[SerializeField]
 	State state = State.STATE_BREATHER;
@@ -127,11 +129,13 @@ public class CurrentState : MonoBehaviour
 		//Debug.Log("You pressed " + currentKey + " " + count + " times.");
 		if (count [0] > count [1])
 		{
+			currentWinner = 0;
 			winner = 0;
 			loser = 1;
 		}
 		else if (count [1] > count [0])
 		{
+			currentWinner = 1;
 			winner = 1;
 			loser = 0;
 		}
@@ -145,9 +149,9 @@ public class CurrentState : MonoBehaviour
 		if (winner != -1)
 		{
 			GetComponent<AudioSource> ().PlayOneShot (riseAudioClip);
-			sliders [winner].value++;
-			int currentValue = (int) sliders [winner].value;
-			if (sliders [winner].value < 5)
+			int newValue = (int) sliders [winner].value + 1;
+			StartCoroutine(IncreaseSliderOverTime ());
+			if (newValue < 5)
 			{
 				text [winner].text = "You won";
 				text [loser].text = "You lost";
@@ -160,9 +164,9 @@ public class CurrentState : MonoBehaviour
 				state = State.STATE_VICTORY;
 			}
 
-			if (sliders [winner].value > highestLevel)
+			if (newValue > highestLevel)
 			{
-				highestLevel = (int) sliders [winner].value;
+				highestLevel = newValue;
 				StartCoroutine(IncreaseVolumeOverTime());
 			}
 		}
@@ -172,12 +176,23 @@ public class CurrentState : MonoBehaviour
 
 	private IEnumerator IncreaseVolumeOverTime()
 	{
-		while (audioSources [highestLevel].volume <= 1.0f)
+		while (audioSources [highestLevel].volume < 1.0f)
 		{
 			audioSources [highestLevel].volume = audioSources [highestLevel].volume + 0.1f;
 			audioSources [highestLevel-1].volume = audioSources [highestLevel-1].volume - 0.1f;
 			yield return new WaitForSeconds(0.1f);
 		}
+	}
+
+	private IEnumerator IncreaseSliderOverTime()
+	{
+		int nextValue = (int) sliders [currentWinner].value + 1;
+		while (sliders [currentWinner].value < nextValue)
+		{
+			sliders [currentWinner].value = sliders [currentWinner].value + 0.1f;
+			yield return new WaitForSeconds(0.1f);
+		}
+		sliders [currentWinner].value = nextValue;
 	}
 			
 	// Update is called once per frame
