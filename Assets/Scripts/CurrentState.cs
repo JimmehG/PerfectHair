@@ -86,6 +86,7 @@ public class CurrentState : MonoBehaviour
 		count = new int[2];
 		PickKey ();
 
+		buttonAudioDictionary = new Dictionary<string, ButtonAudio> ();
 		ButtonAudio[] buttonAudios = (ButtonAudio[]) Resources.FindObjectsOfTypeAll(typeof(ButtonAudio));
 		foreach (ButtonAudio buttonAudio in buttonAudios)
 		{
