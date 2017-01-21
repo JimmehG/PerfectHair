@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class CurrentState : MonoBehaviour
 {
 	enum State {STATE_BREATHER, STATE_ROUND, STATE_VICTORY};
@@ -12,6 +13,9 @@ public class CurrentState : MonoBehaviour
 
 	[SerializeField]
 	AudioSource[] audioSources;
+
+	[SerializeField]
+	AudioClip riseAudioClip;
 
 	[Header("Players")]
 
@@ -131,6 +135,7 @@ public class CurrentState : MonoBehaviour
 
 		if (winner != -1)
 		{
+			GetComponent<AudioSource> ().PlayOneShot (riseAudioClip);
 			sliders [winner].value++;
 			int currentValue = (int) sliders [winner].value;
 			if (sliders [winner].value < 5)
