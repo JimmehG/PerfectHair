@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonName: B_
   keyCodes: 780000006d000000
+  buttonAudio: {fileID: 11400000, guid: ce1644e85be4a47d4bcec3267df4daee, type: 2}

@@ -8,4 +8,6 @@ public class InputButton : ScriptableObject
 	public string buttonName;
 
 	public List<KeyCode> keyCodes;
+
+	public ButtonAudio buttonAudio;
 }
