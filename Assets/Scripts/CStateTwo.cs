@@ -100,7 +100,7 @@ public class CStateTwo : MonoBehaviour {
 		switch(GameState)
         {
             case GameStates.before:
-                if (Input.GetButtonDown("Start_1") || Input.GetButtonDown("Start_1"))
+                if (Input.GetButtonDown("Start_1") || Input.GetButtonDown("Start_2"))
                 {
                     GameState = GameStates.game;
                     AnnounceDisplay.text = "";
@@ -167,7 +167,7 @@ public class CStateTwo : MonoBehaviour {
                 break;
             case GameStates.win:
                 AnnounceDisplay.text = "Player " + (Score.p1WinG() ? "1" : "2") + " wins!";
-                if (Input.GetButtonDown("Start_1") || Input.GetButtonDown("Start_1"))
+                if (Input.GetButtonDown("Start_1") || Input.GetButtonDown("Start_2"))
                 {
                     GameState = GameStates.before;
                     AnnounceDisplay.text = "Press START to begin";

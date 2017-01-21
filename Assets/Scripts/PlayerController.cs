@@ -26,21 +26,21 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetButtonDown("A_"+ player))
         {
-            body.Play("A");
+            body.Play(player == 2 ? "2A" : "A");
         }
         else if (Input.GetButtonDown("B_" + player))
         {
 
-            body.Play("B");
+            body.Play(player == 2 ? "2B" : "B");
         }
         else if (Input.GetButtonDown("X_" + player))
         {
 
-            body.Play("X");
+            body.Play(player == 2 ? "2X" : "X");
         }
         else if (Input.GetButtonDown("Y_" + player))
         {
-            body.Play("Y");
+            body.Play(player == 2 ? "2Y" : "Y");
         }
     }
 
