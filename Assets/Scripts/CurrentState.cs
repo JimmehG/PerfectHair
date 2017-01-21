@@ -69,7 +69,7 @@ public class CurrentState : MonoBehaviour
 		{
 			for (int i = 1; i < audioSources.Length; i++)
 			{
-				audioSources [i].mute = true;
+				audioSources [i].volume = 0.0f;
 			}
 		}
 
@@ -149,24 +149,23 @@ public class CurrentState : MonoBehaviour
 			if (sliders [winner].value > highestLevel)
 			{
 				highestLevel = (int) sliders [winner].value;
-				for (int i = 0; i < audioSources.Length; i++)
-				{
-					if (i != highestLevel)
-					{
-						audioSources [i].mute = true;
-					}
-					else
-					{
-						audioSources [i].mute = false;
-					}
-
-				}
+				StartCoroutine(IncreaseVolumeOverTime());
 			}
 		}
 		if(state != State.STATE_VICTORY)
 			Invoke ("PickKey", 2);
 	}
 
+	private IEnumerator IncreaseVolumeOverTime()
+	{
+		while (audioSources [highestLevel].volume <= 1.0f)
+		{
+			audioSources [highestLevel].volume = audioSources [highestLevel].volume + 0.1f;
+			audioSources [highestLevel-1].volume = audioSources [highestLevel-1].volume - 0.1f;
+			yield return new WaitForSeconds(0.1f);
+		}
+	}
+			
 	// Update is called once per frame
 	void Update ()
 	{
