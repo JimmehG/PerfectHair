@@ -31,6 +31,8 @@ public class CurrentState : MonoBehaviour
 
 	private List<KeyCode>[] playerKeyCodes;
 
+	private int highestLevel = 0;
+
 	[Header("Round Time")]
 
 	[SerializeField]
@@ -105,42 +107,20 @@ public class CurrentState : MonoBehaviour
 	private void KeyDone()
 	{
 		CancelInvoke ();
+		int winner = -1;
+		int loser = -1;
 		countDownText.text = "Times up!";
 		state = State.STATE_BREATHER;
 		//Debug.Log("You pressed " + currentKey + " " + count + " times.");
 		if (count [0] > count [1])
 		{
-			Debug.Log ("Player one wins");
-			sliders [0].value++;
-			if (sliders [0].value < 5)
-			{
-				text [0].text = "You won";
-				text [1].text = "You lost";
-			}
-			else
-			{
-				countDownText.text = "Player one wins";
-				text [0].text = "";
-				text [1].text = "";
-				state = State.STATE_VICTORY;
-			}
+			winner = 0;
+			loser = 1;
 		}
 		else if (count [1] > count [0])
 		{
-			Debug.Log ("Player two wins");
-			sliders [1].value++;
-			if (sliders [1].value < 5)
-			{
-				text [1].text = "You won";
-				text [0].text = "You lost";
-			}
-			else
-			{
-				countDownText.text = "Player two wins";
-				text [0].text = "";
-				text [1].text = "";
-				state = State.STATE_VICTORY;
-			}
+			winner = 1;
+			loser = 0;
 		}
 		else
 		{
@@ -148,7 +128,43 @@ public class CurrentState : MonoBehaviour
 			text [0].text = "";
 			text [1].text = "";
 		}
-		Invoke ("PickKey", 2);
+
+		if (winner != -1)
+		{
+			sliders [winner].value++;
+			int currentValue = (int) sliders [winner].value;
+			if (sliders [winner].value < 5)
+			{
+				text [winner].text = "You won";
+				text [loser].text = "You lost";
+			}
+			else
+			{
+				countDownText.text = "Player " + (winner+1) + " wins";
+				text [winner].text = "";
+				text [loser].text = "";
+				state = State.STATE_VICTORY;
+			}
+
+			if (sliders [winner].value > highestLevel)
+			{
+				highestLevel = (int) sliders [winner].value;
+				for (int i = 0; i < audioSources.Length; i++)
+				{
+					if (i != highestLevel)
+					{
+						audioSources [i].mute = true;
+					}
+					else
+					{
+						audioSources [i].mute = false;
+					}
+
+				}
+			}
+		}
+		if(state != State.STATE_VICTORY)
+			Invoke ("PickKey", 2);
 	}
 
 	// Update is called once per frame
