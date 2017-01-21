@@ -106,10 +106,11 @@ public class CurrentState : MonoBehaviour
 			text [i].text = "Press " + currentKey [i];
 		}
 		countDown = Random.Range (minKeyTime, maxKeyTime + 1);
-		countDownText.text = "Time left: " + countDown;
+		//countDownText.text = "Time left: " + countDown;
+		countDownText.text = "";
 		Debug.Log("Press for the next " + countDown + " seconds");
 		state = State.STATE_ROUND;
-		InvokeRepeating ("Countdown", 1, 1);
+		//InvokeRepeating ("Countdown", 1, 1);
 		Invoke ("KeyDone", countDown);
 	}
 
