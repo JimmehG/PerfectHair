@@ -10,6 +10,9 @@ public class CurrentState : MonoBehaviour
 	[SerializeField]
 	Text countDownText;
 
+	[SerializeField]
+	AudioSource[] audioSources;
+
 	[Header("Players")]
 
 	[SerializeField]
@@ -60,6 +63,14 @@ public class CurrentState : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		if (audioSources.Length > 1)
+		{
+			for (int i = 1; i < audioSources.Length; i++)
+			{
+				audioSources [i].mute = true;
+			}
+		}
+
 		playerKeyCodes = new List<KeyCode>[2];
 		playerKeyCodes [0] = playerOneKeyCodes;
 		playerKeyCodes [1] = playerTwoKeyCodes;
