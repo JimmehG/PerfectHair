@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c327ece23034af4b4488be442fa7ca, type: 3}
   m_Name: XButton
   m_EditorClassIdentifier: 
-  buttonName: YButton
+  buttonName: J
   audioClips:
   - {fileID: 8300000, guid: 69f10d8abc6da4bdb8781dec1205899c, type: 3}
   - {fileID: 8300000, guid: f3c932012a5954b4fa3a655fae55cbc0, type: 3}

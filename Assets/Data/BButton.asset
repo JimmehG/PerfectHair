@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c327ece23034af4b4488be442fa7ca, type: 3}
   m_Name: BButton
   m_EditorClassIdentifier: 
-  buttonName: B
+  buttonName: Z
   audioClips:
   - {fileID: 8300000, guid: cd2da6d1ea3e24d6b8e281258e921524, type: 3}
   - {fileID: 8300000, guid: 003f62dd2bc864b4687b830afc239b4e, type: 3}
