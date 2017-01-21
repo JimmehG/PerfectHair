@@ -61,6 +61,8 @@ public class CurrentState : MonoBehaviour
 	[Tooltip("The current button to press")]
 	KeyCode[] currentKey;
 
+    ButtonEnum currentButton;
+
 	[ReadOnlyAttribute]
 	[SerializeField]
 	[Tooltip("Number of times pressed for each player")]
@@ -69,9 +71,18 @@ public class CurrentState : MonoBehaviour
 	[ReadOnlyAttribute]
 	[SerializeField]
 	int countDown;
+    
 
-	// Use this for initialization
-	void Start ()
+    private enum ButtonEnum
+    {
+        A_,
+        B_,
+        X_,
+        Y_
+    }
+
+    // Use this for initialization
+    void Start ()
 	{
 		if (audioSources.Length > 1)
 		{
@@ -85,6 +96,7 @@ public class CurrentState : MonoBehaviour
 		playerKeyCodes [0] = playerOneKeyCodes;
 		playerKeyCodes [1] = playerTwoKeyCodes;
 		currentKey = new KeyCode[2];
+        currentButton = new ButtonEnum();
 		count = new int[2];
 		PickKey ();
 
@@ -99,11 +111,12 @@ public class CurrentState : MonoBehaviour
 	private void PickKey()
 	{
 		int pickedKey = Random.Range (0, 2);
+        currentButton = (ButtonEnum)Random.Range(0, 3);
 		for (int i = 0; i < 2; i++)
 		{
 			count[i] = 0;
 			currentKey [i] = playerKeyCodes[i] [pickedKey];
-			text [i].text = "Press " + currentKey [i];
+			text [i].text = "Press " + currentKey [i] + " or " + currentButton.ToString().Substring(0,1);
 		}
 		countDown = Random.Range (minKeyTime, maxKeyTime + 1);
 		//countDownText.text = "Time left: " + countDown;
@@ -203,7 +216,7 @@ public class CurrentState : MonoBehaviour
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				if (Input.GetKeyDown (currentKey [i]))
+				if (Input.GetKeyDown (currentKey [i]) || Input.GetButtonDown(currentButton.ToString() + (i+1)))
 				{
 					Debug.Log ("Player " + (i + 1) + " pressed!");
 					count [i]++;
