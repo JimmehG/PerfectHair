@@ -17,6 +17,8 @@ public class CurrentState : MonoBehaviour
 	[SerializeField]
 	AudioClip riseAudioClip;
 
+	Dictionary<string, ButtonAudio> buttonAudioDictionary;
+
 	[Header("Players")]
 
 	[SerializeField]
@@ -83,6 +85,12 @@ public class CurrentState : MonoBehaviour
 		currentKey = new KeyCode[2];
 		count = new int[2];
 		PickKey ();
+
+		ButtonAudio[] buttonAudios = (ButtonAudio[]) Resources.FindObjectsOfTypeAll(typeof(ButtonAudio));
+		foreach (ButtonAudio buttonAudio in buttonAudios)
+		{
+			buttonAudioDictionary.Add (buttonAudio.buttonName, buttonAudio);
+		}
 	}
 
 	private void PickKey()
@@ -183,6 +191,8 @@ public class CurrentState : MonoBehaviour
 					Debug.Log ("Player " + (i + 1) + " pressed!");
 					count [i]++;
 					text [i].text = currentKey [i] + ": " + count [i];
+					ButtonAudio buttonAudio = buttonAudioDictionary [currentKey [i].ToString()];
+					GetComponent<AudioSource> ().PlayOneShot (buttonAudio.getRandomAudioClip ());
 				}
 			}
 		}
