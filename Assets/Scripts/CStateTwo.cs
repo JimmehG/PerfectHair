@@ -33,7 +33,10 @@ public class CStateTwo : MonoBehaviour {
     public AudioClip ChangeAudioClip;
     
     Scores Score;
-    
+
+    [SerializeField]
+    Slider[] sliders;
+
     class Scores
     {
         public Scores()
@@ -49,6 +52,20 @@ public class CStateTwo : MonoBehaviour {
         public int p1G;
         public int p2G;
         int roundsToWinG = 7;
+
+        public void changeP1(int change)
+        {
+            p1R = p1R + change;
+            if (p1R < 0)
+                p1R = 0;
+        }
+
+        public void changeP2(int change)
+        {
+            p2R = p2R + change;
+            if (p2R < 0)
+                p2R = 0;
+        }
 
         public bool p1WinR()
         {
@@ -186,72 +203,87 @@ public class CStateTwo : MonoBehaviour {
         SwitchTime = 0;
     }
 
+    public void ChangeScore(int player, int change)
+    {
+        if(player == 0)
+        {
+            Score.changeP1(change);
+            sliders[player].value = Score.p1R;
+
+        }
+        else
+        {
+            Score.changeP2(change);
+            sliders[player].value = Score.p2R;
+        }
+    }
+
     void CheckInput()
     {
-        var negValue = 5;
+        var negValue = -5;
         if (Input.GetButtonDown("A_1"))
         {
             GetComponent<AudioSource>().PlayOneShot(A.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.A_)
-                Score.p1R++;
+                ChangeScore(0, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("A_2"))
         {
             GetComponent<AudioSource>().PlayOneShot(A.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.A_)
-                Score.p2R++;
+                ChangeScore(1, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("B_1"))
         {
             GetComponent<AudioSource>().PlayOneShot(B.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.B_)
-                Score.p1R++;
+                ChangeScore(0, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("B_2"))
         {
             GetComponent<AudioSource>().PlayOneShot(B.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.B_)
-                Score.p2R++;
+                ChangeScore(1, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("X_1"))
         {
             GetComponent<AudioSource>().PlayOneShot(X.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.X_)
-                Score.p1R++;
+                ChangeScore(0, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("X_2"))
         {
             GetComponent<AudioSource>().PlayOneShot(X.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.X_)
-                Score.p2R++;
+                ChangeScore(1, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("Y_1"))
         {
             GetComponent<AudioSource>().PlayOneShot(Y.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.Y_)
-                Score.p1R++;
+                ChangeScore(0, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
         if (Input.GetButtonDown("Y_2"))
         {
             GetComponent<AudioSource>().PlayOneShot(Y.getRandomAudioClip());
             if (CurrentButton == ButtonEnum.Y_)
-                Score.p2R++;
+                 ChangeScore(1, 1);
             else
-                Score.p1R -= negValue;
+                ChangeScore(0, negValue);
         }
     }
 
