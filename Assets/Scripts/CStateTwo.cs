@@ -15,6 +15,7 @@ public class CStateTwo : MonoBehaviour {
 
     ButtonEnum CurrentButton;
     
+    public GameObject title;
 
     public Text AnnounceDisplay;
 
@@ -131,6 +132,7 @@ public class CStateTwo : MonoBehaviour {
                 {
                     GameState = GameStates.game;
                     AnnounceDisplay.text = "";
+                    title.SetActive(false);
                     SwitchButton();
                 }
                 break;
