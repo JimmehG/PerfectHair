@@ -7,15 +7,18 @@ public class Flicker : MonoBehaviour
 {
     Text text;
 
+    public bool flickering = false;
+
     void Start()
     {
         text = GetComponent<Text>();
-        StartCoroutine(IncreaseSliderOverTime());
+        StartCoroutine(FlickerText());
     }
 
-    private IEnumerator IncreaseSliderOverTime()
+    private IEnumerator FlickerText()
     {
-        while (true)
+        flickering = true;
+        while (flickering)
         {
             if (text.enabled)
             {
