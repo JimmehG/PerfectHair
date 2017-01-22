@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39c327ece23034af4b4488be442fa7ca, type: 3}
-  m_Name: AButton
+  m_Name: Y_Audio
   m_EditorClassIdentifier: 
-  buttonName: A
+  buttonName: M
   audioClips:
-  - {fileID: 8300000, guid: bc6309800b8af45a49219ef8cd84d1e1, type: 3}
-  - {fileID: 8300000, guid: 34ee6fec62bf44a128379186d122aefe, type: 3}
-  - {fileID: 8300000, guid: d590be00439404e219f9eb004bd6fc9c, type: 3}
-  - {fileID: 8300000, guid: 1ff8de7d27e864e76b206db1b7514f0c, type: 3}
+  - {fileID: 8300000, guid: c4a83c22b79b449d58f6afae4eed4349, type: 3}
+  - {fileID: 8300000, guid: 94efc4dec83154865ad8fe5cb5aab0b3, type: 3}
+  - {fileID: 8300000, guid: 3605b96f988b24b6e92f3f7c76b0ee49, type: 3}
+  - {fileID: 8300000, guid: 43469925d82944244b8c24892aa9d566, type: 3}
