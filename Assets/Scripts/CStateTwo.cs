@@ -92,6 +92,7 @@ public class CStateTwo : MonoBehaviour {
             }
         }
         Score = new Scores();
+        ButtonDisplay.text = "";
         AnnounceDisplay.text = "Press START to begin";
     }
 
