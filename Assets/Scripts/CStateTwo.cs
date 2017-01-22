@@ -14,11 +14,18 @@ public class CStateTwo : MonoBehaviour {
     GameStates GameState;
 
     ButtonEnum CurrentButton;
-
-    public Text ButtonDisplay;
+    
 
     public Text AnnounceDisplay;
-    
+
+    public SpriteRenderer CommandBubble;
+
+    public MeshRenderer APrompt;
+    public MeshRenderer BPrompt;
+    public MeshRenderer XPrompt;
+    public MeshRenderer YPrompt;
+    MeshRenderer CurrPrompt;
+
     [SerializeField]
     AudioSource[] AudioSources;
 
@@ -109,7 +116,6 @@ public class CStateTwo : MonoBehaviour {
             }
         }
         Score = new Scores();
-        ButtonDisplay.text = "";
         AnnounceDisplay.text = "Press START to begin".ToUpper();
     }
 
@@ -138,9 +144,10 @@ public class CStateTwo : MonoBehaviour {
                 {
                     GameState = GameStates.heart;
                     //todo trashtalk //AnnounceDisplay.text = one of the trashtalks;
-                    ButtonDisplay.text = "";
+                    CurrPrompt.enabled = false;
                     Heart.Play(Score.p1WinR() ? "1" : "2");
                     GetComponent<AudioSource>().PlayOneShot(RiseAudioClip);
+                    CommandBubble.enabled = false;
                 }
 
                 SwitchTime += Time.deltaTime;
@@ -188,7 +195,7 @@ public class CStateTwo : MonoBehaviour {
                 if (Input.GetButtonDown("Start_1") || Input.GetButtonDown("Start_2"))
                 {
                     GameState = GameStates.before;
-                    AnnounceDisplay.text = "Press START to begin";
+                    AnnounceDisplay.text = "Press START to begin".ToUpper();
                 }
                 break;
         }
@@ -196,11 +203,29 @@ public class CStateTwo : MonoBehaviour {
 
     private void SwitchButton()
     {
-        CurrentButton = (ButtonEnum)UnityEngine.Random.Range(0, 3);
-        ButtonDisplay.text = CurrentButton.ToString().Substring(0, 1);
+        CurrentButton = (ButtonEnum)UnityEngine.Random.Range(0, 4);
         FinishedSwitchTime = UnityEngine.Random.Range(1, 8);
         GetComponent<AudioSource>().PlayOneShot(ChangeAudioClip);
         SwitchTime = 0;
+        if (CurrPrompt != null)
+            CurrPrompt.enabled = false;
+        CommandBubble.enabled = true;
+        switch (CurrentButton)
+        {
+            case ButtonEnum.A_:
+                CurrPrompt = APrompt;
+                break;
+            case ButtonEnum.B_:
+                CurrPrompt = BPrompt;
+                break;
+            case ButtonEnum.X_:
+                CurrPrompt = XPrompt;
+                break;
+            case ButtonEnum.Y_:
+                CurrPrompt = YPrompt;
+                break;
+        }
+        CurrPrompt.enabled = true;
     }
 
     public void ChangeScore(int player, int change)
