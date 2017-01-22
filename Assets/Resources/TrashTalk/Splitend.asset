@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397e7ce046319c6449bff1f309cdf942, type: 3}
   m_Name: Splitend
   m_EditorClassIdentifier: 
-  talk: 
+  talk: You will meet your split-end!
