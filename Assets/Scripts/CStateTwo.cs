@@ -44,6 +44,9 @@ public class CStateTwo : MonoBehaviour {
     [SerializeField]
     Slider[] sliders;
 
+    [SerializeField]
+    Hearts[] hearts;
+
     class Scores
     {
         public Scores()
@@ -168,9 +171,11 @@ public class CStateTwo : MonoBehaviour {
                     if (Score.p1WinR()) {
                         Score.p1G++;
                         newValue = Score.p1G;
+                        hearts[0].AddHeart();
                     } else {
                         Score.p2G++;
                         newValue = Score.p2G;
+                        hearts[1].AddHeart();
                     }
                     HeartTime = 0;
                     if (Score.p1WinG() || Score.p2WinG())
