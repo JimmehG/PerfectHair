@@ -224,7 +224,6 @@ public class CStateTwo : MonoBehaviour {
             CurrPrompt.enabled = false;
         CommandBubble.enabled = true;
 
-		string keyboardText = "";
 		if (currentButton.buttonName.Equals ("A_"))
 		{
 			CurrPrompt = APrompt;
