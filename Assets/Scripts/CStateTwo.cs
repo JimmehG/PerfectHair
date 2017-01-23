@@ -59,7 +59,7 @@ public class CStateTwo : MonoBehaviour {
         }
         public int p1R;
         public int p2R;
-        public int pressesToWinR = 80;
+        public int pressesToWinR = 10;
         public int p1G;
         public int p2G;
         int roundsToWinG = 7;
@@ -142,8 +142,7 @@ public class CStateTwo : MonoBehaviour {
                 if (Score.p1WinR() && Score.p2WinR())
                 {
                     AnnounceDisplay.text = "TIE GO AGAIN!";
-                    Score.p1R = 0;
-                    Score.p2R = 0;
+					ResetScores();
                 }
                 else if (Score.p1WinR() || Score.p2WinR())
                 {
@@ -185,8 +184,7 @@ public class CStateTwo : MonoBehaviour {
                     else
                     {
                         GameState = GameStates.game;
-                        Score.p1R = 0;
-                        Score.p2R = 0;
+						ResetScores ();
                         AnnounceDisplay.text = "";
                         SwitchButton();
                         if (newValue > Score.Highest())
@@ -249,6 +247,14 @@ public class CStateTwo : MonoBehaviour {
             sliders[player].value = Score.p2R;
         }
     }
+
+	public void ResetScores()
+	{
+		Score.p1R = 0;
+		Score.p2R = 0;
+		sliders[0].value = Score.p1R;
+		sliders[1].value = Score.p2R;
+	}
 
     void CheckInput()
     {
