@@ -267,7 +267,7 @@ public class CStateTwo : MonoBehaviour {
             if (CurrentButton == ButtonEnum.A_)
                 ChangeScore(1, 1);
             else
-                ChangeScore(0, negValue);
+                ChangeScore(1, negValue);
         }
         if (Input.GetButtonDown("B_1"))
         {
@@ -283,7 +283,7 @@ public class CStateTwo : MonoBehaviour {
             if (CurrentButton == ButtonEnum.B_)
                 ChangeScore(1, 1);
             else
-                ChangeScore(0, negValue);
+                ChangeScore(1, negValue);
         }
         if (Input.GetButtonDown("X_1"))
         {
@@ -299,7 +299,7 @@ public class CStateTwo : MonoBehaviour {
             if (CurrentButton == ButtonEnum.X_)
                 ChangeScore(1, 1);
             else
-                ChangeScore(0, negValue);
+                ChangeScore(1, negValue);
         }
         if (Input.GetButtonDown("Y_1"))
         {
@@ -315,7 +315,7 @@ public class CStateTwo : MonoBehaviour {
             if (CurrentButton == ButtonEnum.Y_)
                  ChangeScore(1, 1);
             else
-                ChangeScore(0, negValue);
+                ChangeScore(1, negValue);
         }
     }
 
