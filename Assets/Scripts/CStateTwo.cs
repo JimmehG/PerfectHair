@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CStateTwo : MonoBehaviour {
 
+	[SerializeField]
+	bool usingControllers = false;
 
     enum GameStates { before, game, heart, win };
 
-    enum ButtonEnum { A_, B_, X_, Y_ }
-
     GameStates GameState;
 
-    ButtonEnum CurrentButton;
+	InputButton[] inputButtons;
+	InputButton currentButton;
     
     public GameObject title;
 
@@ -59,7 +59,7 @@ public class CStateTwo : MonoBehaviour {
         }
         public int p1R;
         public int p2R;
-        public int pressesToWinR = 10;
+        public int pressesToWinR = 80;
         public int p1G;
         public int p2G;
         int roundsToWinG = 7;
@@ -100,7 +100,7 @@ public class CStateTwo : MonoBehaviour {
 
         public int Highest()
         {
-            return Math.Max(p1G, p2G);
+			return Mathf.Max(p1G, p2G);
         }
     }
 
@@ -112,6 +112,15 @@ public class CStateTwo : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+		Object[] buttonObjects = Resources.LoadAll ("", typeof(InputButton));
+		Debug.Log ("Found buttons: " + buttonObjects.Length);
+		inputButtons = new InputButton[buttonObjects.Length];
+		for(int i = 0; i < buttonObjects.Length; i++)
+		{
+			inputButtons [i] = (InputButton) buttonObjects [i];
+			Debug.Log ("Input Button: " + inputButtons[i].buttonName);
+		}
+
         if (AudioSources.Length > 1)
         {
             for (int i = 1; i < AudioSources.Length; i++)
@@ -137,7 +146,6 @@ public class CStateTwo : MonoBehaviour {
                 }
                 break;
             case GameStates.game:
-                CheckInput();
 
                 if (Score.p1WinR() && Score.p2WinR())
                 {
@@ -165,7 +173,7 @@ public class CStateTwo : MonoBehaviour {
             case GameStates.heart:
                 //play heart animation and break for next round (taunt time)
                 HeartTime += Time.deltaTime;
-                AnnounceDisplay.text = ((int)Math.Round(FinishedHeartTime - HeartTime)).ToString() + " seconds till the next round!";
+				AnnounceDisplay.text = ((int)Mathf.Round(FinishedHeartTime - HeartTime)).ToString() + " seconds till the next round!".ToUpper();
                 if (HeartTime >= FinishedHeartTime)
                 {
                     var newValue = 0;
@@ -208,29 +216,37 @@ public class CStateTwo : MonoBehaviour {
 
     private void SwitchButton()
     {
-        CurrentButton = (ButtonEnum)UnityEngine.Random.Range(0, 4);
+		currentButton = inputButtons [Random.Range(0, inputButtons.Length)];
         FinishedSwitchTime = UnityEngine.Random.Range(1, 8);
         GetComponent<AudioSource>().PlayOneShot(ChangeAudioClip);
         SwitchTime = 0;
         if (CurrPrompt != null)
             CurrPrompt.enabled = false;
         CommandBubble.enabled = true;
-        switch (CurrentButton)
-        {
-            case ButtonEnum.A_:
-                CurrPrompt = APrompt;
-                break;
-            case ButtonEnum.B_:
-                CurrPrompt = BPrompt;
-                break;
-            case ButtonEnum.X_:
-                CurrPrompt = XPrompt;
-                break;
-            case ButtonEnum.Y_:
-                CurrPrompt = YPrompt;
-                break;
-        }
-        CurrPrompt.enabled = true;
+
+		string keyboardText = "";
+		if (currentButton.buttonName.Equals ("A_"))
+		{
+			CurrPrompt = APrompt;
+		}
+		else if (currentButton.buttonName.Equals ("B_"))
+		{
+			CurrPrompt = BPrompt;
+		}
+		else if (currentButton.buttonName.Equals ("X_"))
+		{
+			CurrPrompt = XPrompt;
+		}	
+		else if(currentButton.buttonName.Equals ("Y_"))
+		{
+			CurrPrompt = YPrompt;
+		}
+
+		CurrPrompt.enabled = true;
+		if (!usingControllers)
+		{
+			AnnounceDisplay.text = "P1: " + currentButton.keyCodes[0] + " P2: " + currentButton.keyCodes[1];
+		}
     }
 
     public void ChangeScore(int player, int change)
@@ -255,82 +271,29 @@ public class CStateTwo : MonoBehaviour {
 		sliders[0].value = Score.p1R;
 		sliders[1].value = Score.p2R;
 	}
-
-    void CheckInput()
-    {
-        var negValue = -5;
-        if (Input.GetButtonDown("A_1"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(A.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.A_)
-                ChangeScore(0, 1);
-            else
-                ChangeScore(0, negValue);
-        }
-        if (Input.GetButtonDown("A_2"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(A.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.A_)
-                ChangeScore(1, 1);
-            else
-                ChangeScore(1, negValue);
-        }
-        if (Input.GetButtonDown("B_1"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(B.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.B_)
-                ChangeScore(0, 1);
-            else
-                ChangeScore(0, negValue);
-        }
-        if (Input.GetButtonDown("B_2"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(B.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.B_)
-                ChangeScore(1, 1);
-            else
-                ChangeScore(1, negValue);
-        }
-        if (Input.GetButtonDown("X_1"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(X.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.X_)
-                ChangeScore(0, 1);
-            else
-                ChangeScore(0, negValue);
-        }
-        if (Input.GetButtonDown("X_2"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(X.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.X_)
-                ChangeScore(1, 1);
-            else
-                ChangeScore(1, negValue);
-        }
-        if (Input.GetButtonDown("Y_1"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(Y.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.Y_)
-                ChangeScore(0, 1);
-            else
-                ChangeScore(0, negValue);
-        }
-        if (Input.GetButtonDown("Y_2"))
-        {
-            GetComponent<AudioSource>().PlayOneShot(Y.getRandomAudioClip());
-            if (CurrentButton == ButtonEnum.Y_)
-                 ChangeScore(1, 1);
-            else
-                ChangeScore(1, negValue);
-        }
-    }
+		
+	public void PressButton(int player, InputButton inputButton)
+	{
+		if (GameState == GameStates.game)
+		{
+			int negValue = -5;
+			if (currentButton == inputButton)
+			{
+				ChangeScore (player, 1);
+			}
+			else
+			{
+				ChangeScore (1, negValue);
+			}
+		}
+	}
 
     private IEnumerator IncreaseVolumeOverTime()
     {
-        while (AudioSources[Math.Min(Score.Highest(),AudioSources.Length-1)].volume < 1.0f)
+        while (AudioSources[Mathf.Min(Score.Highest(),AudioSources.Length-1)].volume < 1.0f)
         {
-            AudioSources[Math.Min(Score.Highest(), AudioSources.Length - 1)].volume = AudioSources[Math.Min(Score.Highest(), AudioSources.Length - 1)].volume + 0.1f;
-            AudioSources[Math.Min(Score.Highest(), AudioSources.Length - 1) - 1].volume = AudioSources[Math.Min(Score.Highest(), AudioSources.Length - 1) - 1].volume - 0.1f;
+            AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1)].volume = AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1)].volume + 0.1f;
+            AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1) - 1].volume = AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1) - 1].volume - 0.1f;
             yield return new WaitForSeconds(0.1f);
         }
     }

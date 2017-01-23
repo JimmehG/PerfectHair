@@ -8,6 +8,7 @@ public class InputHandler : MonoBehaviour
 
 	AudioSource audioSource;
 
+	CStateTwo currentState;
 	// Use this for initialization
 	void Start ()
 	{
@@ -20,6 +21,7 @@ public class InputHandler : MonoBehaviour
 			Debug.Log ("Input Button: " + inputButtons[i].buttonName);
 		}
 		audioSource = GetComponent<AudioSource> ();
+		currentState = GetComponent<CStateTwo> ();
 	}
 	
 	// Update is called once per frame
@@ -33,6 +35,7 @@ public class InputHandler : MonoBehaviour
 				{
 					Debug.Log ("P" + (i + 1) + " pressed " + inputButton.buttonName + (i + 1));
 					audioSource.PlayOneShot (inputButton.buttonAudio.getRandomAudioClip());
+					currentState.PressButton (i, inputButton);
 				}
 			}
 		}
