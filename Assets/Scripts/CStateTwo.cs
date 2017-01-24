@@ -27,8 +27,8 @@ public class CStateTwo : MonoBehaviour {
     public MeshRenderer YPrompt;
     MeshRenderer CurrPrompt;
 
-    [SerializeField]
-    AudioSource[] AudioSources;
+	[SerializeField]
+	DynamicSoundtrack dynamicSoundtrack;
 
     [SerializeField]
     AudioClip RiseAudioClip;
@@ -121,13 +121,6 @@ public class CStateTwo : MonoBehaviour {
 			Debug.Log ("Input Button: " + inputButtons[i].buttonName);
 		}
 
-        if (AudioSources.Length > 1)
-        {
-            for (int i = 1; i < AudioSources.Length; i++)
-            {
-                AudioSources[i].volume = 0.0f;
-            }
-        }
         Score = new Scores();
         AnnounceDisplay.text = "Press START to begin".ToUpper();
     }
@@ -155,6 +148,20 @@ public class CStateTwo : MonoBehaviour {
                 else if (Score.p1WinR() || Score.p2WinR())
                 {
                     GameState = GameStates.heart;
+					int newScore;
+					if (Score.p1WinR ())
+					{
+						newScore = Score.p1G + 1;
+					}
+					else
+					{
+						newScore = Score.p2G + 1;
+					}
+					Debug.Log ("New score: " + newScore + " highest score: " + Score.Highest());
+					if (newScore > Score.Highest ())
+					{//work out whether we've gone to a new stage
+						dynamicSoundtrack.IncreaseSoundtrackStage ();
+					}
                     //todo trashtalk //AnnounceDisplay.text = one of the trashtalks;
                     CurrPrompt.enabled = false;
                     Heart.Play(Score.p1WinR() ? "1" : "2");
@@ -176,14 +183,11 @@ public class CStateTwo : MonoBehaviour {
 				AnnounceDisplay.text = ((int)Mathf.Round(FinishedHeartTime - HeartTime)).ToString() + " seconds till the next round!".ToUpper();
                 if (HeartTime >= FinishedHeartTime)
                 {
-                    var newValue = 0;
                     if (Score.p1WinR()) {
                         Score.p1G++;
-                        newValue = Score.p1G;
                         hearts[0].AddHeart();
                     } else {
                         Score.p2G++;
-                        newValue = Score.p2G;
                         hearts[1].AddHeart();
                     }
                     HeartTime = 0;
@@ -195,10 +199,6 @@ public class CStateTwo : MonoBehaviour {
 						ResetScores ();
                         AnnounceDisplay.text = "";
                         SwitchButton();
-                        if (newValue > Score.Highest())
-                        {
-                            StartCoroutine(IncreaseVolumeOverTime());
-                        }
                     }
 
                 }
@@ -286,14 +286,4 @@ public class CStateTwo : MonoBehaviour {
 			}
 		}
 	}
-
-    private IEnumerator IncreaseVolumeOverTime()
-    {
-        while (AudioSources[Mathf.Min(Score.Highest(),AudioSources.Length-1)].volume < 1.0f)
-        {
-            AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1)].volume = AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1)].volume + 0.1f;
-            AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1) - 1].volume = AudioSources[Mathf.Min(Score.Highest(), AudioSources.Length - 1) - 1].volume - 0.1f;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
 }
