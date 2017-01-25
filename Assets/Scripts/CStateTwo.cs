@@ -34,6 +34,8 @@ public class CStateTwo : MonoBehaviour {
     AudioClip RiseAudioClip;
 
     public AudioClip ChangeAudioClip;
+
+	AudioSource audioSource;
     
     Scores Score;
 
@@ -118,6 +120,8 @@ public class CStateTwo : MonoBehaviour {
 
         Score = new Scores();
         AnnounceDisplay.text = "Press START to begin".ToUpper();
+
+		audioSource = GetComponent<AudioSource> ();
     }
 
     // Update is called once per frame
@@ -160,7 +164,7 @@ public class CStateTwo : MonoBehaviour {
                     //todo trashtalk //AnnounceDisplay.text = one of the trashtalks;
                     CurrPrompt.enabled = false;
                     Heart.Play(Score.p1WinR() ? "1" : "2");
-                    GetComponent<AudioSource>().PlayOneShot(RiseAudioClip);
+					audioSource.PlayOneShot(RiseAudioClip);
                     CommandBubble.enabled = false;
                 }
 
@@ -213,7 +217,7 @@ public class CStateTwo : MonoBehaviour {
     {
 		currentButton = inputButtons [Random.Range(0, inputButtons.Length)];
         FinishedSwitchTime = UnityEngine.Random.Range(1, 8);
-        GetComponent<AudioSource>().PlayOneShot(ChangeAudioClip);
+		audioSource.PlayOneShot(ChangeAudioClip);
         SwitchTime = 0;
         if (CurrPrompt != null)
             CurrPrompt.enabled = false;
