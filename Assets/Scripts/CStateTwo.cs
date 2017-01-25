@@ -32,11 +32,6 @@ public class CStateTwo : MonoBehaviour {
 
     [SerializeField]
     AudioClip RiseAudioClip;
-    
-    public ButtonAudio A;
-    public ButtonAudio B;
-    public ButtonAudio X;
-    public ButtonAudio Y;
 
     public AudioClip ChangeAudioClip;
     
