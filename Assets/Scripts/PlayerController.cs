@@ -17,32 +17,30 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//TODO Maybe move all input checking to be in the handler?
         Groove();
         Shimmy();
-        Pose();
 	}
 
-    private void Pose()
-    {
-        if (Input.GetButtonDown("A_"+ player))
-        {
-            body.Play(player == 2 ? "2A" : "A");
-        }
-        else if (Input.GetButtonDown("B_" + player))
-        {
-
-            body.Play(player == 2 ? "2B" : "B");
-        }
-        else if (Input.GetButtonDown("X_" + player))
-        {
-
-            body.Play(player == 2 ? "2X" : "X");
-        }
-        else if (Input.GetButtonDown("Y_" + player))
-        {
-            body.Play(player == 2 ? "2Y" : "Y");
-        }
-    }
+	public void PlayAnimationForButton(InputButton inputButton)
+	{
+		if (inputButton.buttonName.Equals ("A_"))
+		{
+			body.Play(player == 2 ? "2A" : "A");
+		}
+		else if (inputButton.buttonName.Equals ("B_"))
+		{
+			body.Play(player == 2 ? "2B" : "B");
+		}
+		else if (inputButton.buttonName.Equals ("X_"))
+		{
+			body.Play(player == 2 ? "2X" : "X");
+		}	
+		else if(inputButton.buttonName.Equals ("Y_"))
+		{
+			body.Play(player == 2 ? "2Y" : "Y");
+		}
+	}
 
     private void Shimmy()
     {

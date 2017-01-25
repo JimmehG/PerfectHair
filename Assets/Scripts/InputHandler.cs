@@ -6,8 +6,6 @@ public class InputHandler : MonoBehaviour
 {
 	InputButton[] inputButtons;
 
-	AudioSource audioSource;
-
 	CStateTwo currentState;
 	// Use this for initialization
 	void Start ()
@@ -20,7 +18,6 @@ public class InputHandler : MonoBehaviour
 			inputButtons [i] = (InputButton) buttonObjects [i];
 			Debug.Log ("Input Button: " + inputButtons[i].buttonName);
 		}
-		audioSource = GetComponent<AudioSource> ();
 		currentState = GetComponent<CStateTwo> ();
 	}
 	
@@ -33,8 +30,7 @@ public class InputHandler : MonoBehaviour
 			{
 				if (Input.GetButtonDown (inputButton.buttonName + (i + 1)))
 				{
-					Debug.Log ("P" + (i + 1) + " pressed " + inputButton.buttonName + (i + 1));
-					audioSource.PlayOneShot (inputButton.buttonAudio.getRandomAudioClip());
+					//Debug.Log ("P" + (i + 1) + " pressed " + inputButton.buttonName + (i + 1));
 					currentState.PressButton (i, inputButton);
 				}
 			}

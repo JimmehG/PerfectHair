@@ -28,6 +28,9 @@ public class CStateTwo : MonoBehaviour {
     MeshRenderer CurrPrompt;
 
 	[SerializeField]
+	PlayerController[] playerCharacters;
+
+	[SerializeField]
 	DynamicSoundtrack dynamicSoundtrack;
 
     [SerializeField]
@@ -274,6 +277,8 @@ public class CStateTwo : MonoBehaviour {
 	{
 		if (GameState == GameStates.game)
 		{
+			audioSource.PlayOneShot (inputButton.buttonAudio.getRandomAudioClip());
+			playerCharacters [player].PlayAnimationForButton (inputButton);
 			int negValue = -5;
 			if (currentButton == inputButton)
 			{
