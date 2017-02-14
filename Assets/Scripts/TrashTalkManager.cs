@@ -42,7 +42,7 @@ public class TrashTalkManager : MonoBehaviour
             }
             text[lastIndex].gameObject.SetActive(true);
             text[lastIndex].text = getRandomTrashTalk();
-            Debug.Log(lastIndex + "picked text" + text[lastIndex].text);
+			Debug.Log("Player " + lastIndex + " picked text " + text[lastIndex].text);
             yield return new WaitForSeconds(5f);
             text[lastIndex].gameObject.SetActive(false);
             yield return new WaitForSeconds(2f);
