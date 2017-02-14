@@ -145,7 +145,7 @@ public class CStateTwo : MonoBehaviour {
                 if (Score.p1WinR() && Score.p2WinR())
                 {
                     AnnounceDisplay.text = "TIE GO AGAIN!";
-					ResetScores();
+					ResetRound ();
                 }
                 else if (Score.p1WinR() || Score.p2WinR())
                 {
@@ -198,7 +198,7 @@ public class CStateTwo : MonoBehaviour {
                     else
                     {
                         GameState = GameStates.game;
-						ResetScores ();
+						ResetRound ();
                         AnnounceDisplay.text = "";
                         SwitchButton();
                     }
@@ -210,6 +210,7 @@ public class CStateTwo : MonoBehaviour {
                 if (Input.GetButtonDown("Start_1") || Input.GetButtonDown("Start_2"))
                 {
                     GameState = GameStates.before;
+					ResetGame ();
                     AnnounceDisplay.text = "Press START to begin".ToUpper();
                 }
                 break;
@@ -265,12 +266,23 @@ public class CStateTwo : MonoBehaviour {
         }
     }
 
-	public void ResetScores()
+	public void ResetRound()
 	{
 		Score.p1R = 0;
 		Score.p2R = 0;
 		sliders[0].value = Score.p1R;
 		sliders[1].value = Score.p2R;
+	}
+
+	public void ResetGame()
+	{
+		ResetRound ();
+
+		Score.p1G = 0;
+		Score.p2G = 0;
+
+		hearts [0].ResetHearts ();
+		hearts [1].ResetHearts ();
 	}
 		
 	public void PressButton(int player, InputButton inputButton)

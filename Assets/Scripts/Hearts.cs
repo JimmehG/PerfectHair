@@ -40,4 +40,13 @@ public class Hearts : MonoBehaviour
         if (currentHearts < maxHearts)
             hearts[currentHearts++].sprite = fullSprite;
     }
+
+	public void ResetHearts()
+	{
+		currentHearts = 0;
+		for (int i = 0; i < hearts.Length; i++)
+		{
+			hearts [i].sprite = heartPrefab.sprite;
+		}
+	}
 }
